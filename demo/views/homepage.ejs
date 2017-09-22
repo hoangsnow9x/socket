@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" ng-app='myApp'>
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <link rel="stylesheet" href="/styles/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/styles/style.css">
+  <script src='/js/dependencies/sails.io.js'></script>
+  <script src='/js/angular.js'></script>
+  <script src='/js/jquery.js'></script>
+  <script src='/js/app.js'></script>
+</head>
+<body ng-controller='myController'>
+  <header class="">
+    <div class="main">
+      <h1>Welcom to </h1>
+        <div id="isLogin">
+          <div class="color_red">{{ msg}}</div>
+          <form>
+            <input type="text" ng-model='username'>
+            <input type="password" ng-model='password'>
+            <input type="button" ng-click='login()' value="Login">
+            <input type="button" ng-click='signup()' value="Signup">
+          </form>
+        </div>
+    </div>
+  </header>
+  <!-- end header -->
+  <article ng-show="login" class="main" id="main_chat">
+      <div class="left">
+        <h3>Friends</h3>
+        <button class="btnAddRoom">Room +</button>
+        <div class="add_room">
+          <form>
+            <input type="text" ng-model='roomName' placeholder="Enter room name..">
+            <button ng-click='add_room($event)' ng-name="{{yourName}}" class="addRoom">Room +</button>
+            <button class="close_add_room">Close</button>
+          </form>
+        </div>
+        <!-- end add_room -->
+        
+        <div class="your_rooms">
+          <ul>
+            <!-- get rooms from server -->
+          </ul>
+        </div>
+        <!-- end your_rooms -->
+        
+        <ul>
+          <li ng-repeat='i in listOnline'><a href="" ng-click="chat_with_user($event)" ng-name="{{i.name}}" data-name="{{yourName}}" ><i class="fa fa-angle-double-right"></i>{{i.name}} <span class="notification">0</span></a></li>
+        </ul>
+        <!-- end list online -->
+      </div>
+      <!-- end left -->
+      <div class="right">
+        <div class="head">
+          <p>Hello: <b>{{yourName}}</b></p>
+          <button ng-click='Logout()'>Logout </button>
+          <div class="invite"></div>
+          <div class="list_invite">
+            <ul  >
+              <li ng-repeat='i in listOnline'><a href="" ng-click="invite_user($event)" ng-name="{{i.name}}" data-name="{{yourName}}"><i class="fa fa-angle-double-right"></i>{{i.name}} </a></li>
+            </ul>
+          </div>
+        </div>
+        <!-- end head -->
+       
+        <!-- end send_message -->
+        <div class="content">
+          
+          <p ng-repeat='i in chatContent'>
+            <b><i class='fa fa-user-secret' ></i>{{i.user}} :</b> <span>{{i.message}}</span>
+          </p>
+          
+          <div class="new_msg"></div>
+        </div>
+        <!-- end content -->
+         <div class="send_message">
+          <input type="text" class="txtMessage" ng-model="chat_text">
+          <input type="hidden"  value="{{yourName}}" id='chat_user'>
+          <button class="btnSend" ng-click='sendChat($event)'>Gửi</button>
+        </div>
+      </div>
+      <!-- end right -->
+    </article>
+    <!-- end article -->
+    <script>
+      var notification = $('.notification')
+      if(notification.text() != '0'){
+        notification.show();
+      }
+    </script>
+</body>
+</html>
